@@ -1,3 +1,4 @@
+//TESTTTT
 function Game() {
   var player1 = new Player("X", true);
   var player2 = new Player("Y", false);
@@ -9,9 +10,9 @@ function Player(type, turn) {
 }
 
 function Space() {
-  this.xCoordinate: 0;
-  this.yCoordinate: 0;
-  this.markedBy: 0
+  this.xCoordinate = 0;
+  this.yCoordinate = 0;
+  this.markedBy = 0;
 }
 
 Space.prototype.initialize = function (x, y) {
@@ -35,10 +36,13 @@ function Board() {
 }
 
 Board.prototype.initialize = function() {
+  var counter = 0;
   for (var r = 0; r < 3; r++) {
     for (var c = 0; c < 3; c++) {
-      var currentSpace = Object.create(Space);
-      this.grid[r][c] = '~';
+      var currentSpace = new Space();
+      currentSpace.initialize(r, c);
+      this.spaces[counter] = currentSpace;
+      counter++;
     }
   }
 }
@@ -56,6 +60,7 @@ var runGame = function() {
   var player1 = new Player("X", true);
   var player2 = new Player("Y", false);
   var board = new Board();
+  board.initialize();
   console.log("end");
 }
 
