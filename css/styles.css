@@ -12,7 +12,7 @@ table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 table tr:first-child td {
@@ -31,9 +31,9 @@ table tr td:last-child {
   border-right: 0;
 }
 
-button {
-  margin-left: 50%;
-  margin-top: 30px;
+.resetButton {
+  padding: 35px;
+  text-align: center;
 }
 
 .redWin {
@@ -65,4 +65,9 @@ button {
   border-radius: 5px;
   color: white;
   font-size: 2em;
+}
+
+.jumbotron {
+  text-align: center;
+  margin-top: 15px;
 }
