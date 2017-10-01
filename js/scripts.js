@@ -17,14 +17,21 @@ startGame()
 function startGame() {
   $(".cell").text("");
   board = ["", "", "", "", "", "", "", "", ""];
+  $(".cell").removeClass("blueWin");
+  $(".cell").removeClass("redWin");
+  $(".cell").removeClass("tie");
+  $(".gameOver").hide();
 }
 
 function turn(cellID, player) {
   if ($("#" + cellID).text() === "") {
     $("#" + cellID).text(player);
     board[cellID] = player;
-    if (checkWin(board, player)) {
-      gameOver(WINCOMBOS[i], player);
+    checkWinReal(board, player);
+    if (checkTie()) {
+      $(".cell").addClass("tie");
+      $(".gameOver").show();
+      $(".text").text("TIE");
     }
   } else {
     alert("Space already marked " + $("#" + cellID).text());
@@ -39,7 +46,6 @@ function checkWin(board, player) {
       if (board[WINCOMBOS[i][j]] === player) {
         counter++;
         if (counter === WINCOMBOS[i].length) {
-          console.log("true");
           breakCheck = true;
           break;
         }
@@ -55,22 +61,52 @@ function checkWin(board, player) {
   }
 }
 
+function checkWinReal(board, player) {
+  var breakCheck = false;
+  for (var i = 0; i < WINCOMBOS.length; i++) {
+    var counter = 0;
+    for (var j = 0; j < WINCOMBOS[i].length; j++) {
+      if (board[WINCOMBOS[i][j]] === player) {
+        counter++;
+        if (counter === WINCOMBOS[i].length) {
+          gameOver(WINCOMBOS[i], player);
+          breakCheck = true;
+          break;
+        }
+      }
+    } if (breakCheck === true) {
+      break;
+    }
+  }
+  if (breakCheck) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 function gameOver(winningCombo, player) {
   for (var i = 0; i < winningCombo.length; i++) {
     if (player === "X") {
       $("#" + winningCombo[i]).addClass("blueWin");
+      $(".gameOver").show();
+      $(".text").text("You Win!");
     } else {
       $("#" + winningCombo[i]).addClass("redWin");
+      $(".gameOver").show();
+      $(".text").text("YOU LOSE");
     }
   }
 }
 
 function checkTie() {
-  for (var cell in board) {
-    if (cell === "") {
+  for (var i = 0; i < board.length; i++) {
+    if (board[i] === "") {
       return false;
     }
   }
+  return true;
 }
 
 function minimax(newBoard, player) {
@@ -135,10 +171,6 @@ $(document).ready(function() {
 
   $("table").on('click', '.cell', function(event) {
     turn(event.currentTarget.id, HUMANPLAYER);
-    if (!checkTie()) {
-      turn(minimax(board, AIPLAYER).index, AIPLAYER);
-    } else {
-      alert("TIE");
-    }
+    turn(minimax(board, AIPLAYER).index, AIPLAYER);
   });
 });
