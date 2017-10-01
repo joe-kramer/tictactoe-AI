@@ -35,3 +35,13 @@ button {
   margin-left: 50%;
   margin-top: 30px;
 }
+
+.redWin {
+  background-color: red;
+  opacity: .5;
+}
+
+.blueWin {
+  background-color: blue;
+  opacity: .75;
+}
